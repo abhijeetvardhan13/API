@@ -1,0 +1,54 @@
+@RestController
+@RequestMapping("/api/courses")
+public class CourseController {
+    @Autowired
+    private CourseRepository courseRepository;
+    
+    @PostMapping
+    public Course createCourse(@RequestBody Course course) {
+        return courseRepository.save(course);
+    }
+    
+    @GetMapping
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Course getCourse(@PathVariable Long id) {
+        return courseRepository.findById(id).orElseThrow();
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable Long id) {
+        courseRepository.deleteById(id);
+    }
+}
+
+@RestController
+@RequestMapping("/api/instances")
+public class InstanceController {
+    @Autowired
+    private InstanceRepository instanceRepository;
+    
+    @PostMapping
+    public Instance createInstance(@RequestBody Instance instance) {
+        return 
+        instanceRepository.save(instance);
+    }
+    
+    @GetMapping("/{year}/{semester}")
+    public List<Instance> getInstances(@PathVariable Integer year, @PathVariable Integer semester) {
+        return instanceRepository.findByYearAndSemester(year, semester);
+    }
+    
+    @GetMapping("/{year}/{semester}/{id}")
+    public Instance getInstance(@PathVariable Integer year, @PathVariable Integer semester, @PathVariable Long id) {
+        return instanceRepository.findByIdAndYearAndSemester(id, year, semester).orElseThrow();
+    }
+    
+    @DeleteMapping("/{year}/{semester}/{id}")
+    public void deleteInstance(@PathVariable Integer year, @PathVariable Integer semester, @PathVariable Long id) {
+        instanceRepository.deleteByIdAndYearAndSemester(id, year, semester);
+    }
+}

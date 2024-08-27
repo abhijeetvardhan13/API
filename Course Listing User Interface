@@ -1,0 +1,51 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function CourseList() {
+    const [courses, setCourses] = useState([]);
+    const [instances, setInstances] = useState([]);
+    
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/courses')
+            .then(response => {
+                setCourses(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+    
+    const handleCreateCourse = (course) => {
+        axios.post('http://localhost:8080/api/courses', course)
+            .then(response => {
+                setCourses([...courses, response.data]);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+    
+    const handleCreateInstance = (instance) => {
+        axios.post('http://localhost:8080/api/instances', instance)
+            .then(response => {
+                setInstances([...instances, response.data]);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+    
+    const handleDeleteCourse = (id) => {
+        axios.delete(`http://localhost:8080/api/courses/${id}`)
+            .then(() => {
+                setCourses(courses.filter(course => course.id !== id));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+    
+    const handleDeleteInstance = (year, semester
+
+
+

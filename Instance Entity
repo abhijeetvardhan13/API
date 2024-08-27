@@ -1,0 +1,10 @@
+@Entity
+public class Instance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long courseId;
+    private Integer year;
+    private Integer semester;
+    // getters and setters
+}
